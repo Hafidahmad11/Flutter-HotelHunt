@@ -38,18 +38,9 @@ class DetailAppBar extends StatelessWidget {
                       width: 30,
                       padding: const EdgeInsets.all(5),
                       decoration: const BoxDecoration(
-                          color: Colors.grey, shape: BoxShape.circle),
-                      child: SvgPicture.asset('assets/icons/arrow.svg'),
+                          color: Colors.transparent, shape: BoxShape.circle),
+                      child: SvgPicture.asset('assets/icons/arrowback.svg'),
                     ),
-                  ),
-                  Container(
-                    height: 30,
-                    width: 30,
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).accentColor,
-                        shape: BoxShape.circle),
-                    child: SvgPicture.asset('assets/icons/mark.svg'),
                   ),
                 ],
               ),

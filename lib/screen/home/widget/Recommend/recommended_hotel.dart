@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hotel_hunt/model/hotel.dart';
 import 'package:hotel_hunt/screen/detail/detail.dart';
-import 'package:hotel_hunt/screen/detail/widget/detail_app_bar.dart';
 import 'package:hotel_hunt/widget/circle_icon_button.dart';
 
 class RecommendedHotel extends StatelessWidget {
   final recommendedList = Hotel.generateRecommended();
+
+  RecommendedHotel({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -91,29 +92,46 @@ class RecommendedHotel extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(recommendedList[index].name,
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      recommendedList[index].name,
                                       style: Theme.of(context)
                                           .textTheme
                                           .headline1!
                                           .copyWith(
                                               fontSize: 14,
-                                              fontWeight: FontWeight.w700)),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    recommendedList[index].address,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1!
-                                        .copyWith(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold),
-                                  )
-                                ],
+                                              fontWeight: FontWeight.w700),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      softWrap: true,
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.location_on,
+                                          size: 13,
+                                          color: const Color(0xFF100E34)
+                                              .withOpacity(0.5),
+                                        ),
+                                        Text(
+                                          recommendedList[index].address,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1!
+                                              .copyWith(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                               index % 3 == 0
                                   ? Icon(

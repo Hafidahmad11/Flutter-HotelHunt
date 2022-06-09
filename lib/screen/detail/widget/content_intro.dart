@@ -20,13 +20,42 @@ class ContentIntro extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Text(hotel.address,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1!
-                  .copyWith(fontSize: 14)),
           const SizedBox(
             height: 10,
+          ),
+          Column(
+            children: [
+              Text(hotel.about,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(fontSize: 14)),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                hotel.address,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1!
+                    .copyWith(fontSize: 14),
+              ),
+              Row(
+                children: [
+                  for (var i = 0; i < 4; i++)
+                    const Icon(
+                      Icons.star_rounded,
+                      size: 26,
+                      color: Colors.yellow,
+                    ),
+                ],
+              )
+            ],
           ),
           Text('500000 sqft',
               style: Theme.of(context)
@@ -45,7 +74,7 @@ class ContentIntro extends StatelessWidget {
                       .headline1!
                       .copyWith(fontSize: 16, fontWeight: FontWeight.bold)),
               TextSpan(
-                  text: 'Fer Month',
+                  text: 'Per Bulan',
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1!
