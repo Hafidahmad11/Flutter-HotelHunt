@@ -1,12 +1,22 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hotel_hunt/model/hotel.dart';
 import 'package:hotel_hunt/screen/detail/detail.dart';
 import 'package:hotel_hunt/widget/circle_icon_button.dart';
+import 'package:http/http.dart' as http;
 
 class RecommendedHotel extends StatelessWidget {
+  RecommendedHotel({Key? key}) : super(key: key);
+
   final recommendedList = Hotel.generateRecommended();
 
-  RecommendedHotel({Key? key}) : super(key: key);
+  // final String url = 'http://127.0.0.1:8000/api/hotels';
+
+  // Future getHotels() async {
+  //   var response = await http.get(Uri.parse(url));
+  //   print(json.decode(response.body));
+  //   return json.decode(response.body);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -155,5 +165,30 @@ class RecommendedHotel extends StatelessWidget {
           separatorBuilder: (_, index) => const SizedBox(width: 20),
           itemCount: recommendedList.length),
     );
+
+    // body:
+    // FutureBuilder(
+    //     future: getHotels(),
+    //     builder: (context, snapshot) {
+    //       if (snapshot.hasData) {
+    //         ListView.builder(
+    //             itemCount: snapshot.data['data'].length,
+    //             itemBuilder: (context, index) {
+    //               return Container(
+    //                 height: 180,
+    //                 child: Card(
+    //                   elevation: 5,
+    //                   child: Row(children: [
+    //                     Image.network(
+    //                         snapshot.data['data'][index]['image_url']),
+    //                     Text('test1'),
+    //                   ]),
+    //                 ),
+    //               );
+    //             });
+    //       } else {
+    //         return const Text('Data Error');
+    //       }
+    //     });
   }
 }
