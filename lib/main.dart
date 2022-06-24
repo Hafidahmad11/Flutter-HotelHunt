@@ -91,8 +91,8 @@ class _splashScreenState extends State<splashScreen> {
     super.initState();
     Timer(
         const Duration(seconds: 4),
-        () => Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const SignUpPage())));
+        () => Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => SignUpPage())));
   }
 
   @override
@@ -100,7 +100,7 @@ class _splashScreenState extends State<splashScreen> {
     return AnimatedSplashScreen(
         backgroundColor: Colors.blue,
         splash: 'assets/images/Logo.png',
-        nextScreen: const SignUpPage(),
+        nextScreen: SignUpPage(),
         splashTransition: SplashTransition.rotationTransition
         // child: Scaffold(
         //   body: SizedBox.expand(
