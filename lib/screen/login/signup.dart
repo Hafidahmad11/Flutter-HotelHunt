@@ -1,10 +1,43 @@
-import 'package:flutter/material.dart';
-import 'dart:math' as math;
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:hotel_hunt/screen/home/Pagehome.dart';
+import 'package:hotel_hunt/services/globals.dart';
+import 'package:hotel_hunt/services/auth_service.dart';
+import 'dart:math' as math;
+import '../../rounded_button.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:hotel_hunt/screen/login/signin.dart';
 
 class SignUpPage extends StatelessWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+  // SignUpPage({Key? key}) : super(key: key);
+  String _email = "";
+  String _password = "";
+  String _username = "";
+
+  createAccountPressed() async {
+    bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(_email);
+    if (emailValid) {
+      http.Response response =
+          await AuthService.register(_email, _username, _password);
+      Map responseMap = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => const HomePage(),
+            ));
+      } else {
+        errorSnackBar(context, responseMap.values.first[0]);
+      }
+    } else {
+      errorSnackBar(context, 'email not valid');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,34 +125,28 @@ class SignUpPage extends StatelessWidget {
                                     BorderSide(color: Color(0xFF0B9ADD)))),
                         obscureText: true,
                       ),
-                      const SizedBox(height: 20.0),
-                      SizedBox(
-                        height: 40.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(10.0),
-                          shadowColor: const Color(0xFF0B9ADD),
-                          color: const Color(0xFF0B9ADD),
-                          elevation: 7.0,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SignInPage()));
-                            },
-                            child: const Center(
-                              child: Text(
-                                'Continue',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat'),
-                              ),
-                            ),
-                          ),
-                        ),
+                      const SizedBox(
+                        height: 20.0,
                       ),
+                      RoundedButton(
+                        btnText: 'Create Account',
+                        onBtnPressed: () => createAccountPressed(),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const SignInPage()));
+                        },
+                        child: Text('Already have an account?',
+                            style: const TextStyle(
+                                decoration: TextDecoration.underline)),
+                      )
                     ],
                   ))
             ],
