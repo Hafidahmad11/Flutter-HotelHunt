@@ -11,12 +11,17 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:hotel_hunt/screen/login/signin.dart';
 
-class SignUpPage extends StatelessWidget {
-  // SignUpPage({Key? key}) : super(key: key);
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({Key? key}) : super(key: key);
+
+  @override
+  _SignUpPageState createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
   String _email = "";
   String _password = "";
   String _username = "";
-
   createAccountPressed() async {
     bool emailValid = RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -39,7 +44,6 @@ class SignUpPage extends StatelessWidget {
     }
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -141,7 +145,7 @@ class SignUpPage extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      const SignInPage()));
+                                      SignInPage()));
                         },
                         child: Text('Already have an account?',
                             style: const TextStyle(

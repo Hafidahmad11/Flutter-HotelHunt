@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hotel_hunt/screen/home/Pagehome.dart';
@@ -7,9 +8,14 @@ import 'package:hotel_hunt/screen/home/widget/WishPage/Wishlist.dart';
 import 'package:hotel_hunt/screen/home/widget/TicketPage/ticket.dart';
 import 'package:hotel_hunt/screen/home/widget/SchoolPage.dart';
 import 'package:hotel_hunt/screen/home/widget/BottomNavbar/custom_bottom_navigation_bar.dart';
+import 'package:hotel_hunt/screen/login/signin.dart';
 import 'package:hotel_hunt/screen/login/signup.dart';
+import 'package:hotel_hunt/screen/home/Pagehome.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -32,94 +38,121 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const splashScreen(),
+      home: MainPage(),
     );
   }
 }
 
-class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
-
+class MainPage extends StatelessWidget {
   @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  int _currentIndex = 0;
-
-  final List<Widget> _pages = [
-    const HomePage(),
-    TicketWidget(),
-    wishPage(),
-    const SchoolPage(),
-  ];
-
-  void _setIndex(value) {
-    setState(() {
-      _currentIndex = value;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: _pages[_currentIndex],
-        bottomNavigationBar: customNavBar(
-          _currentIndex,
-          (val) => _setIndex(val),
+  Widget build(BuildContext context) => Scaffold(
+        body: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          // initialData: initialData,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return const HomePage();
+            } else {
+              return SignInPage();
+            }
+          },
         ),
-      ),
-    );
-  }
+      );
 }
 
-// --------------- SPLASH SCREEN -------------------- //
 
-// ignore: camel_case_types
-class splashScreen extends StatefulWidget {
-  const splashScreen({Key? key}) : super(key: key);
 
-  @override
-  _splashScreenState createState() => _splashScreenState();
-}
+  //       ), 
+  //       // _pages[_currentIndex],
+  //       // bottomNavigationBar: customNavBar(
+  //       //   _currentIndex,
+  //       //   (val) => _setIndex(val),
+  //       // ),
+  //     );
+  // }
+  
 
-// ignore: camel_case_types
-class _splashScreenState extends State<splashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Timer(
-        const Duration(seconds: 4),
-        () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => SignUpPage())));
-  }
+  // @override
 
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedSplashScreen(
-        backgroundColor: Colors.blue,
-        splash: 'assets/images/Logo.png',
-        nextScreen: SignUpPage(),
-        splashTransition: SplashTransition.rotationTransition
-        // child: Scaffold(
-        //   body: SizedBox.expand(
-        //     child: Container(
-        //       color: const Color(0xFF0B9ADD),
-        //       child: Column(
-        //         crossAxisAlignment: CrossAxisAlignment.center,
-        //         children: <Widget>[
-        //           Container(
-        //             height: MediaQuery.of(context).size.height,
-        //             decoration: const BoxDecoration(
-        //                 image: DecorationImage(
-        //                     image: AssetImage("assets/images/Logo.png"))),
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        // ),
-        );
-  }
-}
+  // State<MainPage> createState() => _MainPageState();
+
+
+// class _MainPageState extends State<MainPage> {
+//   int _currentIndex = 0;
+
+//   final List<Widget> _pages = [
+//     const HomePage(),
+//     TicketWidget(),
+//     wishPage(),
+//     const SchoolPage(),
+//   ];
+
+//   void _setIndex(value) {
+//     setState(() {
+//       _currentIndex = value;
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return SafeArea(
+//       child: Scaffold(
+//         body: _pages[_currentIndex],
+//         bottomNavigationBar: customNavBar(
+//           _currentIndex,
+//           (val) => _setIndex(val),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// // --------------- SPLASH SCREEN -------------------- //
+
+// // ignore: camel_case_types
+// class splashScreen extends StatefulWidget {
+//   const splashScreen({Key? key}) : super(key: key);
+
+//   @override
+//   _splashScreenState createState() => _splashScreenState();
+// }
+
+// // ignore: camel_case_types
+// class _splashScreenState extends State<splashScreen> {
+//   @override
+//   void initState() {
+//     super.initState();
+//     Timer(
+//         const Duration(seconds: 4),
+//         () => Navigator.pushReplacement(
+//             context, MaterialPageRoute(builder: (context) => SignUpPage())));
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return AnimatedSplashScreen(
+//         backgroundColor: Colors.blue,
+//         splash: 'assets/images/Logo.png',
+//         nextScreen: SignUpPage(),
+//         splashTransition: SplashTransition.rotationTransition
+//         // child: Scaffold(
+//         //   body: SizedBox.expand(
+//         //     child: Container(
+//         //       color: const Color(0xFF0B9ADD),
+//         //       child: Column(
+//         //         crossAxisAlignment: CrossAxisAlignment.center,
+//         //         children: <Widget>[
+//         //           Container(
+//         //             height: MediaQuery.of(context).size.height,
+//         //             decoration: const BoxDecoration(
+//         //                 image: DecorationImage(
+//         //                     image: AssetImage("assets/images/Logo.png"))),
+//         //           ),
+//         //         ],
+//         //       ),
+//         //     ),
+//         //   ),
+//         // ),
+//         );
+//   }
+// }

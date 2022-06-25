@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1026268590212",
+    "project_id": "abepe-firebase",
+    "storage_bucket": "abepe-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1026268590212:android:6134041a96c506f117d2d1",
+        "android_client_info": {
+          "package_name": "com.example.hotel_hunt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1026268590212-dcofh6ttamobf756rli3nvmnfm3sek91.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC21Oc5WMdilEjdEhttzx7EuaGtqczYBpM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1026268590212-dcofh6ttamobf756rli3nvmnfm3sek91.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

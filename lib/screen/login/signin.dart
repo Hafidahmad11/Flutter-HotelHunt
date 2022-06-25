@@ -1,12 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:hotel_hunt/main.dart';
 
+import '../../rounded_button.dart';
+
 class SignInPage extends StatelessWidget {
-  const SignInPage({Key? key}) : super(key: key);
+  SignInPage({Key? key}) : super(key: key);
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -46,7 +57,8 @@ class SignInPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const TextField(
+                      TextField(
+                        controller: emailController,
                         decoration: InputDecoration(
                             icon: Icon(Icons.alternate_email,
                                 color: Color(0xFFBFBFBF)),
@@ -61,6 +73,7 @@ class SignInPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 10.0),
                       TextField(
+                        controller: passwordController,
                         decoration: InputDecoration(
                             icon: Transform.rotate(
                                 angle: -40 * math.pi / -180,
@@ -80,32 +93,37 @@ class SignInPage extends StatelessWidget {
                         obscureText: true,
                       ),
                       const SizedBox(height: 20.0),
-                      SizedBox(
-                        height: 40.0,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(10.0),
-                          shadowColor: const Color(0xFF0B9ADD),
-                          color: const Color(0xFF0B9ADD),
-                          elevation: 7.0,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const MainPage()));
-                            },
-                            child: const Center(
-                              child: Text(
-                                'Login',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat'),
-                              ),
-                            ),
-                          ),
-                        ),
+                      RoundedButton(
+                        btnText: 'Sign In ',
+                        onBtnPressed: signIn,
                       ),
+
+                      // SizedBox(
+                      //   height: 40.0,
+                      //   child: Material(
+                      //     borderRadius: BorderRadius.circular(10.0),
+                      //     shadowColor: const Color(0xFF0B9ADD),
+                      //     color: const Color(0xFF0B9ADD),
+                      //     elevation: 7.0,
+                      //     child: GestureDetector(
+                      //       onTap: () {
+                      //         Navigator.push(
+                      //             context,
+                      //             MaterialPageRoute(
+                      //                 builder: (context) => const MainPage()));
+                      //       },
+                      //       child: const Center(
+                      //         child: Text(
+                      //           'Login',
+                      //           style: TextStyle(
+                      //               color: Colors.white,
+                      //               fontWeight: FontWeight.bold,
+                      //               fontFamily: 'Montserrat'),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ))
             ],
@@ -113,5 +131,11 @@ class SignInPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim());
   }
 }
